@@ -6,6 +6,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Main />}>
+        <Route index element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-order" element={<CreateOrder />} />
       </Route>
