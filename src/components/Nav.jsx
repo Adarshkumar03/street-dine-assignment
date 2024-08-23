@@ -1,12 +1,14 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Nav = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const navigate = useNavigate();
   const items = [
     {
       id: 1,
       name: "Dashboard",
       img: "./Dashboard.png",
+      link: "/dashboard",
     },
     {
       id: 2,
@@ -17,6 +19,7 @@ const Nav = () => {
       id: 3,
       name: "Create Order",
       img: "./CreateOrder.png",
+      link: "/create-order",
     },
     {
       id: 4,
@@ -55,7 +58,7 @@ const Nav = () => {
     },
   ];
   return (
-    <aside className="bg-[#f3f5f5] w-1/6 h-screen">
+    <aside className="bg-[#f3f5f5] w-1/6 h-screen fixed">
       <div className="flex justify-center items-center">
         <img src="./logo.png" />
       </div>
@@ -65,7 +68,11 @@ const Nav = () => {
           return (
             <div
               key={item.id}
-              onClick={() => setSelectedId(item.id)}
+              onClick={() => {
+                setSelectedId(item.id);
+                if (item.name == "Dashboard" || item.name == "Create Order")
+                  navigate(`${item.link}`);
+              }}
               className={`flex items-center px-2 cursor-pointer mx-7 mb-3 rounded-md ${
                 isSelected
                   ? "bg-gradient-to-r from-[#9255a3] to-[#e6dcea] font-semibold text-lg"
@@ -83,9 +90,7 @@ const Nav = () => {
             </div>
           );
         })}
-        <div
-          className="flex items-center px-2 cursor-pointer mx-7 rounded-md mt-5"
-        >
+        <div className="flex items-center px-2 cursor-pointer mx-7 rounded-md mt-5">
           <img src="./Logout.png" className=" mr-3 " alt="Log Out" />
           <h2 className="font-semibold text-[#62696B]">Log Out</h2>
         </div>

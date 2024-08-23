@@ -1,94 +1,119 @@
-const Order = ({ tokenNo, orderNo, isPaid, isDineIn, items, total, rem }) => {
-  const action = [
-    {
-      id: 1,
-      name: "View Items",
-      img: "",
-    },
-    {
-      id: 2,
-      name: "Print Invoice",
-      img: "",
-    },
-    {
-      id: 3,
-      name: "Enter Customer Info",
-      img: "",
-    },
-    {
-      id: 4,
-      name: "Assign Staff",
-      img: "",
-    },
-  ];
+const OrderCard = ({
+  tokenNumber,
+  orderNumber,
+  orderType,
+  paymentStatus,
+  instructions,
+  items,
+  totalAmount,
+  remainingAmount,
+}) => {
   return (
-    <div>
-      <div>
-        <div>
-          <h1>T{tokenNo}</h1>
-          <div>
-            <h3>Token - {tokenNo}</h3>
-            <h4>Order - #{orderNo}</h4>
+    <div className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
+      {/* Order Info Section */}
+      <div className="flex justify-between items-center">
+        {/* Left Section */}
+        <div className="flex items-center">
+          <div className="bg-yellow-500 rounded-lg w-12 h-12 flex items-center justify-center">
+            <span className="font-bold text-xl">T{tokenNumber}</span>
+          </div>
+          <div className="ml-4">
+            <h2 className="font-bold">Token - {tokenNumber}</h2>
+            <p className="text-gray-500">Order #{orderNumber}</p>
           </div>
         </div>
-        <div>
-          {isDineIn ? <h5>Dine In</h5> : <h5>Take Away</h5>}
-          {isPaid ? (
-            <p>
-              <span className="bg-red p-1 rounded-full"></span> Not Paid
-            </p>
-          ) : (
-            <p>
-              <span className="bg-green rounded-full p-1"></span> Paid
-            </p>
-          )}
+
+        {/* Right Section */}
+        <div className="text-right">
+          <p className="bg-[#98b5f4] px-3 py-1 rounded-lg flex justify-center items-center font-semibold text-sm">
+            {orderType}
+          </p>
+          <div className="flex items-center justify-end">
+            <span
+              className={`h-2 w-2 rounded-full mr-2 ${
+                paymentStatus === "Paid" ? "bg-green-500" : "bg-red-500"
+              }`}
+            ></span>
+            <p className="text-gray-800">{paymentStatus}</p>
+          </div>
         </div>
       </div>
-      <div>
-        <p>Instructions</p>
-        <a href="">Add extra cheese</a>
-      </div>
-      <div>
-        <h4>Items</h4>
-        <h4>Qty</h4>
-        <h4>Price</h4>
-      </div>
-      {items.map((item) => {
-        return (
-          <div key={item.id}>
-            <h4>{item.name}</h4>
-            <h4>{item.qty}</h4>
-            <h4>{item.price}</h4>
+
+      {/* Items Section */}
+      <div className="mt-4">
+        <div className="flex justify-between">
+          <h3 className="text-md">Instructions</h3>
+          <a href="#" className="text-blue-500 text-md font-semibold">
+            {instructions}
+          </a>
+        </div>
+
+        <div className="mt-2">
+          <div className="grid grid-cols-3 gap-4 py-1 text-gray-400">
+            <span className="text-[0.87rem]">Items</span>
+            <span className="text-center text-[0.87rem]">Qty</span>
+            <span className="text-right text-[0.87rem]">Price</span>
           </div>
-        );
-      })}
-      <div>
-        <h4>Total Amount</h4>
-        <h4>-</h4>
-        <h4>{total}</h4>
-      </div>
-      <div>
-        <h4>Remaining Amount</h4>
-        <h4>-</h4>
-        <h4>{rem}</h4>
-      </div>
-      <div className="grid grid-cols-2 ">
-        {action.map((act) => {
-          return (
-            <div key={act.id}>
-              <img />
-              <h5>{act.name}</h5>
+          {items.map((item, index) => (
+            <div
+              className="grid grid-cols-3 gap-4 py-1 font-semibold"
+              key={index}
+            >
+              <span className="text-[0.87rem]">{item.name}</span>
+              <span className="text-center text-[0.87rem]">{item.qty}</span>
+              <span className="text-right text-[0.87rem]">₹ {item.price}</span>
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        <div className="">
+          <div className="grid grid-cols-3 gap-6 py-1 font-semibold">
+            <span className="text-[0.87rem]">Total Amount</span>
+            <span className="text-center text-[0.87rem]">-</span>
+            <span className="text-right text-[0.87rem]">₹ {totalAmount}</span>
+          </div>
+          <div className="grid grid-cols-3 gap-6 py-1 font-semibold">
+            <span className="text-[0.87rem]">Remaining Amount</span>
+            <span className="text-center text-[0.87rem]">-</span>
+            <span className="text-right text-[0.87rem]">
+              ₹ {remainingAmount}
+            </span>
+          </div>
+        </div>
       </div>
-      <div>
-        <h3>Payment Options</h3>
-        <div>Accept Cash Before</div>
-        <div>Pay Later</div>
+
+      {/* Actions Section */}
+      <div className="mt-4 space-y-4">
+        <div className="flex justify-between">
+          <button className="bg-[#98b5f4] text-white py-1 px-3 rounded-lg text-sm flex items-center">
+            <img src="./OrderPackage.png" className="mr-2" /> View Items
+          </button>
+          <button className="bg-gray-800 text-white py-1 px-3 rounded-lg text-sm flex items-center">
+            <img src="./Print.png" className="mr-2" /> Print Invoice
+          </button>
+        </div>
+        <div className="flex justify-between">
+          <button className="bg-[#3772f0] text-white py-1 px-3 rounded-lg text-sm flex items-center">
+            <img src="./User.png" className="mr-2" /> Enter Customer Info
+          </button>
+          <button className="bg-gray-800 text-white py-1 px-3 rounded-lg text-sm flex items-center">
+            <img src="./Users.png" className="mr-2" /> Assign Staff
+          </button>
+        </div>
+      </div>
+
+      {/* Payment Section */}
+      <h3 className="mt-3">Payment Options</h3>
+      <div className="mt-4 flex justify-between">
+        <button className="bg-[#008001] text-white px-4 py-2 rounded-lg mr-2">
+          Accept Cash Before
+        </button>
+        <button className="bg-[#008001] text-white p-3 rounded-lg">
+          Pay Later
+        </button>
       </div>
     </div>
   );
 };
 
-export default Order;
+export default OrderCard;
